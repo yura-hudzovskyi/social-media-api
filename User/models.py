@@ -61,6 +61,7 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return self.email
+
     def clean(self):
         if self in self.following:
             raise ValueError("You cannot follow yourself!")
