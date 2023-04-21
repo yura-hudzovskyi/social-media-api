@@ -48,7 +48,10 @@ class User(AbstractUser):
     image = models.ImageField(upload_to="images/", blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     following = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, blank=True, related_name="followers", symmetrical=False
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        related_name="followers",
+        symmetrical=False,
     )
 
     USERNAME_FIELD = "email"
@@ -58,3 +61,6 @@ class User(AbstractUser):
 
     def __str__(self) -> str:
         return self.email
+    def clean(self):
+        if self in self.following:
+            raise ValueError("You cannot follow yourself!")

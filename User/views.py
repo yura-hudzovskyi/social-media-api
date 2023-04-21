@@ -77,3 +77,15 @@ class UserFollowersView(generics.ListAPIView):
     def get_queryset(self):
         queryset = self.request.user.followers.all()
         return queryset
+
+
+class UserFollowingView(generics.ListAPIView):
+    """List of all user`s following"""
+
+    serializer_class = UserListSerializer
+    authentication_classes = (authentication.JWTAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        queryset = self.request.user.following.all()
+        return queryset
