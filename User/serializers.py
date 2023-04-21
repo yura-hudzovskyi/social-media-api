@@ -22,3 +22,17 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ("id", "email", "image", "bio")
+        read_only_fields = ("id", "email", "image", "bio")
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ("id", "email", "image", "bio")
+        read_only_fields = ("id", "email", "image", "bio")
