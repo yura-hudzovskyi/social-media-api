@@ -5,6 +5,8 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils.translation import gettext as _
 
+from social_media_api import settings
+
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -41,12 +43,18 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    username = None
+    username = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(_("email address"), unique=True)
     image = models.ImageField(upload_to="images/", blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
+    following = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, related_name="followers", symmetrical=False
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    def __str__(self) -> str:
+        return self.email
