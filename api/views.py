@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from api.models import Post
-from api.serializers import PostSerializer
+from api.models import Post, Hashtag
+from api.serializers import PostSerializer, HashtagSerializer
 
 
 class PostView(viewsets.ModelViewSet):
@@ -17,3 +17,8 @@ class PostView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class HashtagView(viewsets.ModelViewSet):
+    queryset = Hashtag.objects.all()
+    serializer_class = HashtagSerializer

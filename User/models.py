@@ -45,7 +45,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(_("email address"), unique=True)
-    image = models.ImageField(upload_to="images/", blank=True, null=True)
+    image = models.ImageField(upload_to="images/", null=True)
     bio = models.TextField(blank=True, null=True)
     following = models.ManyToManyField(
         settings.AUTH_USER_MODEL,

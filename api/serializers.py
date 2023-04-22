@@ -12,4 +12,4 @@ class PostSerializer(serializers.ModelSerializer):
 class HashtagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hashtag
-        fields = "__all__"
+        fields = ("id", "name")
