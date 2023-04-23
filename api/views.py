@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 
 from api.models import Post, Hashtag
@@ -27,6 +28,18 @@ class PostView(viewsets.ModelViewSet):
     # create a post on behalf of the user
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "hashtags",
+                type={"type": "list", "items": {"type": "string"}},
+                description="List of hashtags to filter by (comma separated) e.g. ?hashtags=hashtag1,hashtag2",
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class HashtagView(viewsets.ModelViewSet):
